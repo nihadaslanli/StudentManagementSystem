@@ -2,13 +2,12 @@
 
 namespace StudentManagementSystem
 {
-    internal partial class Program
+    class Program
     {
-        static void Main(string[] args)
+        static DataContext dataContext = new DataContext();
+
+        static void Main()
         {
-
-
-
             while (true)
             {
                 Console.WriteLine("\nStudent Management System");
@@ -26,7 +25,7 @@ namespace StudentManagementSystem
                         AddStudent();
                         break;
                     case "2":
-                        ViewStudents();
+                        dataContext.ViewStudents();
                         break;
                     case "3":
                         UpdateStudent();
@@ -41,78 +40,39 @@ namespace StudentManagementSystem
                         break;
                 }
             }
-
         }
-            static void AddStudent()
-            {
-                Console.Write("Enter student name: ");
-                string name = Console.ReadLine();
-                Console.Write("Enter student age: ");
-                int age = int.Parse(Console.ReadLine());
-                Console.Write("Enter student grade: ");
-                string grade = Console.ReadLine();
 
-                students.Add(new Student { ID = nextId++, Name = name, Age = age, Grade = grade });
-                Console.WriteLine("Student added successfully!");
-            }
+        static void AddStudent()
+        {
+            Console.Write("Enter student name: ");
+            string name = Console.ReadLine();
+            Console.Write("Enter student age: ");
+            int age = int.Parse(Console.ReadLine());
+            Console.Write("Enter student grade: ");
+            string grade = Console.ReadLine();
 
-            static void ViewStudents()
-            {
-                if (students.Count == 0)
-                {
-                    Console.WriteLine("No students found.");
-                    return;
-                }
+            dataContext.AddStudent(name, age, grade);
+        }
 
-                foreach (var student in students)
-                {
-                    Console.WriteLine($"ID: {student.ID}, Name: {student.Name}, Age: {student.Age}, Grade: {student.Grade}");
-                }
-            }
+        static void UpdateStudent()
+        {
+            Console.Write("Enter student ID to update: ");
+            int id = int.Parse(Console.ReadLine());
+            Console.Write("Enter new name: ");
+            string name = Console.ReadLine();
+            Console.Write("Enter new age: ");
+            int age = int.Parse(Console.ReadLine());
+            Console.Write("Enter new grade: ");
+            string grade = Console.ReadLine();
 
-            static void UpdateStudent()
-            {
-                Console.Write("Enter student ID to update: ");
-                int id = int.Parse(Console.ReadLine());
+            dataContext.UpdateStudent(id, name, age, grade);
+        }
 
-                Student student = students.Find(s => s.ID == id);
-                if (student == null)
-                {
-                    Console.WriteLine("Student not found.");
-                    return;
-                }
-
-                Console.Write("Enter new name: ");
-                student.Name = Console.ReadLine();
-                Console.Write("Enter new age: ");
-                student.Age = int.Parse(Console.ReadLine());
-                Console.Write("Enter new grade: ");
-                student.Grade = Console.ReadLine();
-
-                Console.WriteLine("Student updated successfully!");
-            }
-
-            static void DeleteStudent()
-            {
-                Console.Write("Enter student ID to delete: ");
-                int id = int.Parse(Console.ReadLine());
-
-                Student student = students.Find(s => s.ID == id);
-                if (student == null)
-                {
-                    Console.WriteLine("Student not found.");
-                    return;
-                }
-
-                students.Remove(student);
-                Console.WriteLine("Student deleted successfully!");
-            }
-        
+        static void DeleteStudent()
+        {
+            Console.Write("Enter student ID to delete: ");
+            int id = int.Parse(Console.ReadLine());
+            dataContext.DeleteStudent(id);
+        }
     }
 }
-
-
-
-
-
-
