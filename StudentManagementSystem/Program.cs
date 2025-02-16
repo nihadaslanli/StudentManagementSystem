@@ -41,7 +41,6 @@ namespace StudentManagementSystem
                 }
             }
         }
-
         static void AddStudent()
         {
             Console.Write("Enter student name: ");

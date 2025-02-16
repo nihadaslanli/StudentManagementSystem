@@ -1,6 +1,4 @@
-﻿
-
-namespace StudentManagementSystem
+﻿namespace StudentManagementSystem
 {
     class Student
     {
